@@ -14,3 +14,22 @@ class DropColumns(BaseEstimator, TransformerMixin):
         data = X.copy()
         # Retornamos um novo dataframe sem as colunas indesejadas
         return data.drop(labels=self.columns, axis='columns')
+    
+class FeaturesTransformer(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        print('FeaturesTransformer init')
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        data = X.copy()
+
+        # Removendo outliers
+        data["NOTA_MF"] = np.where(data["NOTA_MF"] > 10, 10, data["NOTA_MF"])
+
+        # Valores faltando
+        data["NOTA_GO"] = data["NOTA_GO"].fillna(data["NOTA_MF"]) # usando a correlação entre NOTA_GO E NOTA_MF
+        data["INGLES"] = data["INGLES"].fillna(1) # Supondo que a maioria não sabe inglês
+
+        return data
