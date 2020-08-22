@@ -59,18 +59,14 @@ class SmoteColumn(BaseSMOTE):
       
     def _fit_resample(self, X, y):
 
-        print(self.columns)             
         data_x = X.copy()
         data_y = y.copy()
-
-        print(data_x.shape)
-        
+       
         columns = self.columns[2:]
         
         smote = SMOTE(random_state=42)
         
         data_x, data_y = smote.fit_sample(data_x, data_y)
-        print("deu")
         data_x = pd.DataFrame(data=data_x, columns=columns)
 
         return data_x,data_y
