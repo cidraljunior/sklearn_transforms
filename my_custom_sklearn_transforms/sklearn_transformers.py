@@ -38,14 +38,8 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
         return data
 
 class SmoteColumn(BaseEstimator, TransformerMixin):
-    
-    def __init__(self):
-        pass
 
-    def fit(self, X, y):
-        return self
-
-    def transform(self, X, y):
+    _fit_resample(self, X, y):
                        
         data_x = X.copy()
         data_y = y.copy()
