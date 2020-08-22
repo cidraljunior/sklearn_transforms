@@ -42,10 +42,7 @@ class SmoteColumn(object):
         pass
 
     def fit(self, X, y):
-        return self
-
-    def transform(self, X, y):
-               
+                       
         data_x = X.copy()
         data_y = y.copy()
         
