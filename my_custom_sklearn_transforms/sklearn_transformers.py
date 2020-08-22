@@ -59,3 +59,12 @@ class SmoteColumn(BaseEstimator, TransformerMixin):
         data_x = pd.DataFrame.from_records(data=data_x, columns=columns)
 
         return data_x, data_y
+    
+class SmoteResample(object):
+    def __init__(self):
+        pass
+
+    def fit(self, X, y):
+        X_resampled, y_resampled = SMOTE().fit_resample(X, y)
+        X_resampled = pd.DataFrame(X_resampled, columns=X.columns)
+        return X_resampled, y_resampled
