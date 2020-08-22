@@ -39,7 +39,7 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
 
 class SmoteColumn(BaseEstimator, TransformerMixin):
 
-    _fit_resample(self, X, y):
+    def _fit_resample(self, X, y):
                        
         data_x = X.copy()
         data_y = y.copy()
