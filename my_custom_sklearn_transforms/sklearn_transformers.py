@@ -16,7 +16,7 @@ class DropColumns(BaseEstimator, TransformerMixin):
         data = X.copy()
         # Retornamos um novo dataframe sem as colunas indesejadas
         return data.drop(labels=self.columns, axis='columns')
-    
+
 class FeaturesTransformer(BaseEstimator, TransformerMixin):
     def __init__(self):
         print('FeaturesTransformer init')
@@ -35,11 +35,11 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
         data["INGLES"] = data["INGLES"].fillna(1) # Supondo que a maioria não sabe inglês
 
         return data
-    
-class SmoteColumn(BaseEstimator, TransformerMixin):
+
+class FeaturesTransformer2(BaseEstimator, TransformerMixin):
     
     def __init__(self):
-        print('Inicio')
+        print('FeaturesTransformer init')
 
     def fit(self, X, y=None):
         return self
