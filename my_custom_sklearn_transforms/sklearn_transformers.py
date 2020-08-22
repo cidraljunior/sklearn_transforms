@@ -42,8 +42,8 @@ class SmoteColumn(BaseSMOTE):
 
     def __init__(
         self,
-        *,
         X,
+        *,
         sampling_strategy="auto",
         random_state=None,
         k_neighbors=5,
