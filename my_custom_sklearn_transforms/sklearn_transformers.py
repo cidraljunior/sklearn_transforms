@@ -9,10 +9,10 @@ class DropColumns(BaseEstimator, TransformerMixin):
     def __init__(self, columns):
         self.columns = columns
 
-    def fit(self, X, y):
+    def fit(self, X, y=None):
         return self
 
-    def transform(self, X, y):
+    def transform(self, X):
         # Primeiro realizamos a cópia do dataframe 'X' de entrada
         data_x = X.copy()
         data_y = y.copy()
@@ -23,10 +23,10 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
     def __init__(self):
         pass
 
-    def fit(self, X, y):
+    def fit(self, X, y=None):
         return self
 
-    def transform(self, X, y):
+    def transform(self, X):
         data_x = X.copy()
         data_y = y.copy()
 
