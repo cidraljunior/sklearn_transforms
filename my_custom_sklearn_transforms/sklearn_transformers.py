@@ -36,14 +36,25 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
 
         return data
 
-class SmoteResample(object):
+class SmoteColumn(object):
+    
     def __init__(self):
         pass
 
     def fit(self, X, y):
-        X_resampled, y_resampled = SMOTE().fit_resample(X, y)
-        X_resampled = pd.DataFrame(X_resampled, columns=X.columns)
-        return X_resampled, y_resampled
-    
-    
-    
+        return self
+
+    def transform(self, X, y):
+               
+        data_x = X.copy()
+        data_y = y.copy()
+        
+        columns = data_x.columns
+        
+        smote = SMOTE(random_state=42)
+        
+        data_x, data_y = smote.fit_sample(data_x, data_y)
+        
+        data_x = pd.DataFrame.from_records(data=data_x, columns=columns)
+
+        return data_x, data_y
