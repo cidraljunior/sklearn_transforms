@@ -19,7 +19,7 @@ class DropColumns(BaseEstimator, TransformerMixin):
 
 class FeaturesTransformer(BaseEstimator, TransformerMixin):
     def __init__(self):
-        print('FeaturesTransformer init')
+        pass
 
     def fit(self, X, y=None):
         return self
@@ -36,10 +36,10 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
 
         return data
 
-class FeaturesTransformer2(BaseEstimator, TransformerMixin):
+class FeaturesTransformer2(object):
     
     def __init__(self):
-        print('FeaturesTransformer init')
+        pass
 
     def fit(self, X, y):
         return self
