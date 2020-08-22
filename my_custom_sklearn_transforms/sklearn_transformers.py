@@ -36,7 +36,7 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
 
         return data
     
-class SMOTE_clone(BaseEstimator, TransformerMixin):
+class SmoteColumn(BaseEstimator, TransformerMixin):
     
     def __init__(self):
         print('Inicio')
