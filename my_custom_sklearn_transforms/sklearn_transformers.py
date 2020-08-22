@@ -14,10 +14,9 @@ class DropColumns(BaseEstimator, TransformerMixin):
 
     def transform(self, X):
         # Primeiro realizamos a cópia do dataframe 'X' de entrada
-        data_x = X.copy()
-        data_y = y.copy()
+        data = X.copy()
         # Retornamos um novo dataframe sem as colunas indesejadas
-        return data_x.drop(labels=self.columns, axis='columns'), y
+        return data.drop(labels=self.columns, axis='columns')
 
 class FeaturesTransformer(BaseEstimator, TransformerMixin):
     def __init__(self):
@@ -27,19 +26,18 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
-        data_x = X.copy()
-        data_y = y.copy()
+        data = X.copy()
 
         # Removendo outliers
-        data_x["NOTA_MF"] = np.where(data_x["NOTA_MF"] > 10, 10, data_x["NOTA_MF"])
+        data["NOTA_MF"] = np.where(data["NOTA_MF"] > 10, 10, data["NOTA_MF"])
 
         # Valores faltando
-        data_x["NOTA_GO"] = data_x["NOTA_GO"].fillna(data_x["NOTA_MF"]) # usando a correlação entre NOTA_GO E NOTA_MF
-        data_x["INGLES"] = data_x["INGLES"].fillna(1) # Supondo que a maioria não sabe inglês
+        data["NOTA_GO"] = data["NOTA_GO"].fillna(data["NOTA_MF"]) # usando a correlação entre NOTA_GO E NOTA_MF
+        data["INGLES"] = data["INGLES"].fillna(1) # Supondo que a maioria não sabe inglês
 
-        return data_x, data_y
+        return data
 
-class SmoteColumn(object):
+class SmoteColumn(BaseEstimator, TransformerMixin):
     
     def __init__(self):
         pass
