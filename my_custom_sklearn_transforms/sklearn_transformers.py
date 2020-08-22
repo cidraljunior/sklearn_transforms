@@ -43,6 +43,7 @@ class SmoteColumn(BaseSMOTE):
     def __init__(
         self,
         *,
+        X,
         sampling_strategy="auto",
         random_state=None,
         k_neighbors=5,
@@ -56,7 +57,7 @@ class SmoteColumn(BaseSMOTE):
         )
         self.columns = X.columns
       
-    def _fit_resample(self, X,y):
+    def _fit_resample(self, X, y):
 
         print(self.columns)             
         data_x = X.copy()
