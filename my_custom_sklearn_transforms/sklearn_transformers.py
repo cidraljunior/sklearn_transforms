@@ -2,6 +2,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 import numpy as np
 import pandas as pd
 import imblearn
+from imblearn.over_sampling._smote import BaseSMOTE
 from imblearn.over_sampling import SMOTE
 
 # All sklearn Transforms must have the `transform` and `fit` methods
@@ -37,26 +38,38 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
 
         return data
 
-class SmoteColumn(BaseEstimator, TransformerMixin):
+class SmoteColumn(BaseSMOTE):
 
-    def __init__(self):
-        pass
+    def __init__(
+        self,
+        *,
+        sampling_strategy="auto",
+        random_state=None,
+        k_neighbors=5,
+        n_jobs=None,
+    ):
+        super().__init__(
+            sampling_strategy=sampling_strategy,
+            random_state=random_state,
+            k_neighbors=k_neighbors,
+            n_jobs=n_jobs,
+        )
+        self.columns = X.columns
+      
+    def _fit_resample(self, X,y):
 
-    def fit(self, X, y):
-        return self
-
-    def transform(self, X, y):
-                       
+        print(self.columns)             
         data_x = X.copy()
         data_y = y.copy()
+
+        print(data_x.shape)
         
-        columns = data_x.columns
+        columns = self.columns[2:]
         
         smote = SMOTE(random_state=42)
         
         data_x, data_y = smote.fit_sample(data_x, data_y)
-        
+        print("deu")
         data_x = pd.DataFrame(data=data_x, columns=columns)
 
-        return data_x, data_y
-   
+        return data_x,data_y
