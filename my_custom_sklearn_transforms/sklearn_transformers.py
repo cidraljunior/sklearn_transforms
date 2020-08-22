@@ -12,11 +12,12 @@ class DropColumns(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         return self
 
-    def transform(self, X):
+    def transform(self, X, y):
         # Primeiro realizamos a cópia do dataframe 'X' de entrada
-        data = X.copy()
+        data_x = X.copy()
+        data_y = y.copy()
         # Retornamos um novo dataframe sem as colunas indesejadas
-        return data.drop(labels=self.columns, axis='columns')
+        return data_x.drop(labels=self.columns, axis='columns'), y
 
 class FeaturesTransformer(BaseEstimator, TransformerMixin):
     def __init__(self):
@@ -25,17 +26,18 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         return self
 
-    def transform(self, X):
-        data = X.copy()
+    def transform(self, X, y):
+        data_x = X.copy()
+        data_y = y.copy()
 
         # Removendo outliers
-        data["NOTA_MF"] = np.where(data["NOTA_MF"] > 10, 10, data["NOTA_MF"])
+        data_x["NOTA_MF"] = np.where(data_x["NOTA_MF"] > 10, 10, data_x["NOTA_MF"])
 
         # Valores faltando
-        data["NOTA_GO"] = data["NOTA_GO"].fillna(data["NOTA_MF"]) # usando a correlação entre NOTA_GO E NOTA_MF
-        data["INGLES"] = data["INGLES"].fillna(1) # Supondo que a maioria não sabe inglês
+        data_x["NOTA_GO"] = data_x["NOTA_GO"].fillna(data_x["NOTA_MF"]) # usando a correlação entre NOTA_GO E NOTA_MF
+        data_x["INGLES"] = data_x["INGLES"].fillna(1) # Supondo que a maioria não sabe inglês
 
-        return data
+        return data_x, data_y
 
 class SmoteColumn(object):
     
@@ -45,10 +47,10 @@ class SmoteColumn(object):
     def fit(self, X, y=None):
         return self
 
-    def transform(self, X):
+    def transform(self, X, y):
                        
         data_x = X.copy()
-        data_y = pd.DataFrame(np.zeros((len(data_x), 1)))
+        data_y = y.copy()
         
         columns = data_x.columns
         
@@ -58,4 +60,4 @@ class SmoteColumn(object):
         
         data_x = pd.DataFrame.from_records(data=data_x, columns=columns)
 
-        return data_x
+        return data_x, data_y
