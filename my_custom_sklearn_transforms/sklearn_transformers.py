@@ -41,10 +41,13 @@ class SmoteColumn(object):
     def __init__(self):
         pass
 
-    def fit(self, X, y):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
                        
         data_x = X.copy()
-        data_y = y.copy()
+        data_y = pd.DataFrame(0, index=np.arange(len(data_x)))
         
         columns = data_x.columns
         
@@ -54,4 +57,4 @@ class SmoteColumn(object):
         
         data_x = pd.DataFrame.from_records(data=data_x, columns=columns)
 
-        return data_x, data_y
+        return data_x
