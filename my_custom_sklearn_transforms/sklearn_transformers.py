@@ -41,7 +41,7 @@ class FeaturesTransformer2(BaseEstimator, TransformerMixin):
     def __init__(self):
         print('FeaturesTransformer init')
 
-    def fit(self, X, y=None):
+    def fit(self, X, y):
         return self
 
     def transform(self, X, y):
@@ -57,7 +57,5 @@ class FeaturesTransformer2(BaseEstimator, TransformerMixin):
         data_x = pd.DataFrame.from_records(data=data_x, columns=columns)
 
         return data_x, data_y
-    
-    
     
     
