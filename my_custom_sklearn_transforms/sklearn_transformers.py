@@ -59,4 +59,17 @@ class FeaturesTransformer2(object):
 
         return data_x, data_y
     
+class SmoteColumn(object):
+    def __init__(self):
+        pass
+    
+    def fit(self, X, y):
+        return self
+
+    def transform(self, X, y):
+        data_x, data_y = SMOTE().fit_resample(X, y)
+        data_X = pd.DataFrame(data_x, columns=X.columns)
+        return data_x, data_y
+    
+    
     
