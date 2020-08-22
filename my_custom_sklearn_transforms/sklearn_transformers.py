@@ -48,7 +48,7 @@ class SmoteColumn(object):
     def transform(self, X):
                        
         data_x = X.copy()
-        data_y = pd.DataFrame(0, index=np.arange(len(data_x)))
+        data_y = pd.DataFrame(np.zeros((len(data_x), 1)))
         
         columns = data_x.columns
         
