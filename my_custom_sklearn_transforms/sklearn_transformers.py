@@ -1,5 +1,7 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 import numpy as np
+import imblearn
+from imblearn.over_sampling import SMOTE
 
 # All sklearn Transforms must have the `transform` and `fit` methods
 class DropColumns(BaseEstimator, TransformerMixin):
@@ -43,9 +45,7 @@ class FeaturesTransformer2(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X, y):
-        
-        from imblearn.over_sampling import SMOTE
-        
+               
         data_x = X.copy()
         data_y = y.copy()
         
