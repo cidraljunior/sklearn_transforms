@@ -34,37 +34,27 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
         # Valores faltando
         data["NOTA_GO"] = data["NOTA_GO"].fillna(data["NOTA_MF"]) # usando a correlação entre NOTA_GO E NOTA_MF
         data["INGLES"] = data["INGLES"].fillna(1) # Supondo que a maioria não sabe inglês
+        
+        # Novas Colunas
+        
+        data['MEDIA_DEEM'] = (data["NOTA_DE"]+data["NOTA_EM"])/2
+        data['MEDIA_MFGO'] = (data["NOTA_MF"]+data["NOTA_GO"])/2
+        
+        data["MEDIA_DEEM_sqrt"] = np.sqrt(data["MEDIA_DEEM"])
+        data["MEDIA_MFGO_sqrt"] = np.sqrt(data["MEDIA_MFGO"])
+        
+        data["REPROVACOES_DE_sqrt"] = np.sqrt(data["REPROVACOES_DE"])
+        data["REPROVACOES_EM_sqrt"] = np.sqrt(data["REPROVACOES_EM"])
+        data["REPROVACOES_MF_sqrt"] = np.sqrt(data["REPROVACOES_MF"])
+        data["REPROVACOES_GO_sqrt"] = np.sqrt(data["REPROVACOES_GO"])
+        
+        data["H_AULA_PRES_sqrt"] = np.sqrt(data["H_AULA_PRES"])
+        data["TAREFAS_ONLINE_sqrt"] = np.sqrt(data["TAREFAS_ONLINE"])
+        data["FALTAS_sqrt"] = np.sqrt(data["FALTAS"])
+        
+        del data["NOTA_DE"]
+        del data["NOTA_EM"]
+        del data["NOTA_MF"]
+        del data["NOTA_GO"]
 
         return data
-
-class SmoteColumn(BaseEstimator, TransformerMixin):
-
-    ## Transformação apenas para treinamento
-    def __init__(self):
-        pass
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X,y):
-        data_x = X.copy()
-        data_y = y.copy()
-
-        data_x["MATRICULA"] = 1
-        data_x["NOME"] = 1
-
-        # Removendo outliers
-        data_x["NOTA_MF"] = np.where(data_x["NOTA_MF"] > 10, 10, data_x["NOTA_MF"])
-
-        # Valores faltando
-        data_x["NOTA_GO"] = data_x["NOTA_GO"].fillna(data_x["NOTA_MF"]) # usando a correlação entre NOTA_GO E NOTA_MF
-        data_x["INGLES"] = data_x["INGLES"].fillna(1) # Supondo que a maioria não sabe inglês
-
-        columns = X.columns
-        
-        smote = SMOTE(random_state=42)
-        
-        data_x, data_y = smote.fit_sample(data_x, data_y)
-        data_x = pd.DataFrame(data=data_x, columns=columns)
-
-        return data_x,data_y
